@@ -9,5 +9,13 @@ public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml") ;
         ((Schedule)context.getBean("schedule")).taskSchedule();
+        synchronized (Main.class)
+        {
+            try {
+                Main.class.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
